@@ -65,7 +65,7 @@ const images = [
 ];
 
 
-document.querySelector("body").style.cssText = `display: flex; justify-content: center`
+document.querySelector("body").style.cssText = `display: flex; justify-content: center`;
 
 let markup = images.map((image) => 
     `<li class="gallery-item">
@@ -77,19 +77,20 @@ let markup = images.map((image) =>
 
 const gallery = document.querySelector(".gallery");
 gallery.innerHTML = markup;
+
 gallery.style.cssText = `margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; width: 1128px; gap: 24px`;
-
 document.querySelectorAll(".gallery-image").forEach(img => {
-    img.style.cssText = `display: block; max-width: 100%; height: auto;  object-fit: contain;`
-})
-document.querySelectorAll(".gallery-item").forEach(li => {
-    li.style.cssText = `width: calc((100% - 48px) / 3); height: 200px; overflow: hidden;`;
-})
+    img.style.cssText = `display: block; width: 360px; height: 200px;`
+});
 
+gallery.addEventListener('click', function galleryClick(event) {
+    event.preventDefault();
 
-
-document.querySelectorAll(".gallery-link").forEach(link => {
-    link.addEventListener("click", event => {
-        event.preventDefault();
-    });
+    if (event.target.nodeName !== "IMG") {
+    return;
+    }
+    const imageModal = basicLightbox.create(`
+    <img src="${event.target.dataset.source}">
+`)
+    imageModal.show()
 });
