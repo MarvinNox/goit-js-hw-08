@@ -67,10 +67,10 @@ const images = [
 
 document.querySelector("body").style.cssText = `display: flex; justify-content: center`;
 
-let markup = images.map((image) => 
+let markup = images.map(({preview, original, description}) => 
     `<li class="gallery-item">
-        <a class="gallery-link" href="${image.original}">
-            <img class="gallery-image" src="${image.preview}" data-source="${image.original}" alt="${image.description}"/>
+        <a class="gallery-link" href="${original}">
+            <img class="gallery-image" src="${preview}" data-source="${original}" alt="${description}"/>
         </a>
     </li>
 `).join("");
@@ -80,7 +80,17 @@ gallery.innerHTML = markup;
 
 gallery.style.cssText = `margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; width: 1128px; gap: 24px`;
 document.querySelectorAll(".gallery-image").forEach(img => {
-    img.style.cssText = `display: block; width: 360px; height: 200px;`
+    img.style.cssText = `display: block; width: 360px; height: 200px; transition: transform 300ms ease-in;`;
+});
+
+document.querySelectorAll(".gallery-image").forEach(img => {
+    img.addEventListener("mouseover", () => {
+        img.style.transform = "scale(1.05)";
+    });
+
+    img.addEventListener("mouseout", () => {
+        img.style.transform = "scale(1)";
+    });
 });
 
 gallery.addEventListener('click', function galleryClick(event) {
